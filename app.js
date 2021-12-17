@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const port = 3000;
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const engine = require('ejs-mate');
 const Campground = require('./models/campground')
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp');
@@ -24,6 +25,7 @@ db.once("open", () => {
 // }
 const app = express();
 
+app.engine('ejs', engine) //uses ejs locals for all ejs templates
 app.set('views', path.join(__dirname, 'views')); //so we can keep views in seperate folder
 app.set('view engine', 'ejs'); //to use ejs
 
@@ -43,12 +45,10 @@ app.get('/campgrounds', async (req, res) => {
 //needs to go above /:id otherwise overridden
 //page for new campground
 app.get('/campgrounds/new', (req, res) => {
-    const { id } = req.params;
     res.render('campgrounds/new')
 });
 //render campgrounds with unique id
 app.get('/campgrounds/:id', async (req, res) => {
-    const { id } = req.params;
     const campground = await Campground.findById(req.params.id);
     console.log(campground)
     res.render('campgrounds/show', { campground })
@@ -56,6 +56,7 @@ app.get('/campgrounds/:id', async (req, res) => {
 //render new campground and display it afterwards
 app.post('/campgrounds', async (req, res) => {
     const campground = new Campground(req.body);
+    console.log(req.body.campground, req.body)
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`)
 })
@@ -77,16 +78,6 @@ app.delete('/campgrounds/:id', async (req, res) => {
     const campground = await Campground.findByIdAndDelete(id);
     res.redirect('/campgrounds');
 })
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show</title>
-</head>
-
-<body>
-    <h1>Campground <%= campground.title %> </h1>
-    <h2><%= campground.location %></h2>
-    <a href="/campgrounds/<%= campground._id %>/edit">Edit</a>
-    <a href="/campgrounds">Back</a>
-    <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
-        <button>DELETE</button>
-    </form>
-</body>
-
-</html>
+<% layout ('layouts/boilerplate') -%>
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card mb-3">
+            <img class="card-img-top" src="<%=campground.image%>" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title"><%= campground.title %></h5>
+                <p class="card-text"><%=campground.description%></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><%= campground.location%></li>
+                <li class="list-group-item">$<%=campground.price%> per night</li>
+            </ul>
+            <div class="card-body">
+                <a href="/campgrounds/" class="card-link btn btn-success">Back to Campgrounds</a>
+                <a href="/campgrounds/<%=campground._id%>/edit" class="card-link btn btn-warning">Edit</a>
+                <form action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST" class="d-inline"></a>
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+            <div class="card-footer text-muted">
+                3 weeks ago - need to make new attribute for when it was created
+            </div>
+        </div>
+    </div>
+</div>
