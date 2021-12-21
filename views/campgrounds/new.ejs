@@ -2,32 +2,35 @@
 <div class="row">
     <h1 class="text-center">New Campground</h1>
     <div class="col-6 offset-3">
-        <form action="/campgrounds" method="POST">
+        <form action="/campgrounds" method="POST" novalidate class="validated-form">
             <div class="mb-3">
                 <label class='form-label' for="title">Title</label>
-                <input class='form-control' type="text" id='title' name='title' required>
+                <input class='form-control' type="text" id='title' name='campground[title]' required>
+                <div class="valid-feedback">
+                    Looks Good!
+                </div>
             </div>
             <div class="mb-3">
                 <label class='form-label' for="location">Location</label>
-                <input class='form-control' type="text" name="location" id="location" required>
+                <input class='form-control' type="text" name="campground[location]" id="location" required>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="price">Campground Price</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="price" name="price">$</span>
+                        <span class="input-group-text" id="price" name="campground[price]">$</span>
                     </div>
                     <input type="text" class="form-control" placeholder=0.00 aria-label="price" aria-describedby="price"
-                        name="price">
+                        name="campground[price]" required>
                 </div>
             </div>
             <div class="mb-3">
                 <label class='form-label' for="image">image Url</label>
-                <input class='form-control' type="text" name="image" id="image">
+                <input class='form-control' type="text" name="campground[image]" id="image" required>
             </div>
             <div class="mb-3">
                 <label class='form-label' for="discription">Description</label>
-                <textarea class='form-control' type="text" name="description" id="description"></textarea>
+                <textarea class='form-control' type="text" name="description" id="description" required></textarea>
             </div>
             <div class="mb-3">
                 <button class="btn btn-success">Submit!</button>
