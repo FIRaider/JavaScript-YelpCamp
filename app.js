@@ -34,15 +34,9 @@ app.set('view engine', 'ejs'); //to use ejs
 app.use(express.urlencoded({ extended: true })); //for post requests
 app.use(methodOverride('_method')) //so we can use method = put in ejs 
 
-const validateCampground = (req, res, next) => {
-    const { error } = campgroundSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400);
-    } else {
-        next();
-    }
-}
+app.use('/campgrounds', campgrounds);
+app.use('/campgrounds:id/reviews', reviews);
+
 
 //render home page
 app.get('/', (req, res) => {
