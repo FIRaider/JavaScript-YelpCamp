@@ -7,6 +7,7 @@ const port = 3000;
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const engine = require('ejs-mate');
+const session = require('express-session');
 const ExpressError = require('./utils/ExpressError');
 
 const campgrounds = require('./routes/campgrounds');
@@ -34,9 +35,16 @@ app.set('view engine', 'ejs'); //to use ejs
 app.use(express.urlencoded({ extended: true })); //for post requests
 app.use(methodOverride('_method')) //so we can use method = put in ejs 
 
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds:id/reviews', reviews);
-
+const sessionConfig = {
+    secret: 'thisshouldbeabettersecret!',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: Date.now() + (1000 * 60 * 60 * 24 * 7),
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    }
+};
+app.use(session(sessionConfig));
 
 //render home page
 app.get('/', (req, res) => {
